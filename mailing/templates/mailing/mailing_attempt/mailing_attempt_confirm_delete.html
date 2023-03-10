@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>
+                            Желаете удалить отчет по сообщению: {{ object.settings.message.letter_subject }}?
+                        </p>
+                        <a class="btn btn-primary" href="{% url "mailing:mailing_attempt_list" %}">Нет</a>
+                        <button class="btn btn-danger" type="submit">Да</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

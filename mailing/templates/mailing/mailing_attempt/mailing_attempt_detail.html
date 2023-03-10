@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td>Дата и время рассылки</td>
+                            <td>{{ object.last_datetime}}</td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{ object.status }}</td>
+                        </tr>
+                        <tr>
+                            <td>Ответ сервера</td>
+                            <td>{{object.server_response}}</td>
+                        </tr>
+                        <tr>
+                            <td>Сообщение</td>
+                            <td>{{ object.settings.message.letter_subject }}</td>
+                        </tr>
+                    </table>
+                    <td><a href="{% url "mailing:mailing_attempt_list" object.pk %}" class="btn btn-primary">Назад</a></td>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

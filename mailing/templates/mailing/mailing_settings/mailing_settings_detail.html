@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td>Время рассылки</td>
+                            <td>{{ object.mailing_time }}</td>
+                        </tr>
+                        <tr>
+                            <td>Периодичность</td>
+                            <td>{{ object.category }}</td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>{{object.mailing_status}}</td>
+                        </tr>
+                        <tr>
+                            <td>Тема сообщения</td>
+                            <td>{{ object.message.letter_subject }}</td>
+                        </tr>
+                        <tr>
+                            <td>Текст сообщения</td>
+                            <td>{{ object.message.letter_body }}</td>
+                        </tr>
+                        <tr>
+                            <td>Почта получателей</td>
+                            <td>
+                                {% for client in object.clients.all %}
+                                {{ object.client.email }}<br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                    <td><a href="{% url "mailing:mailing_settings_list" object.pk %}" class="btn btn-primary">Назад</a></td>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="display-6">Попытка рассылки</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дата и время рассылки</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Ответ сервера</th>
+            <th scope="col">Сообщение</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.last_datetime }}</td>
+                <td>{{ object.status }}</td>
+                <td>{{ object.server_response }}</td>
+                <td>{{ object.settings.message.letter_subject }}</td>
+                <td>
+                    <a href="{% url "mailing:mailing_attempt_detail" object.pk %}" class="btn btn-primary">Подробнее</a>
+                    <br><a href="{% url "mailing:mailing_settings_delete" object.pk %}" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

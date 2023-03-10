@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="display-6">Настройка рассылки</h1>
+    <table class="table table-hover">
+        <thead>
+        <a href="{% url "mailing:mailing_settings_create" %}" class="btn btn-primary">Создать настройку</a>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Время рассылки</th>
+            <th scope="col">Периодичность</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Сообщение</th>
+            <th scope="col">Адреса рассылки</th>
+            <th scope="col">Подробнее</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.mailing_time }}</td>
+                <td>{{ object.period }}</td>
+                <td>{{ object.mailing_status }}</td>
+                {% if object.get_status_display == 'завершена' %}
+                                <td><a class="btn btn-danger"
+                                       href="{% url 'mailing:change_status_settings' object.pk %}">Не активна</a></td>
+                            {% else %}
+                                <td><a class="btn btn-success"
+                                       href="{% url 'mailing:change_status_settings' object.pk %}">Активна</a>
+                                </td>
+                            {% endif %}
+                <td>{{ object.message.letter_subject }}</td>
+                <td>{{ object.clients }}</td>
+                <td><a href="{% url "mailing:mailing_settings_detail" object.pk %}" class="btn btn-primary">Подробнее</a></td>
+                <td>
+                    <a href="{% url "mailing:client_update" object.pk %}" class="btn btn-primary">Изменить</a>
+                    <a href="{% url "mailing:client_delete" object.pk %}" class="btn btn-danger">Удалить</a>
+                <td/>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
