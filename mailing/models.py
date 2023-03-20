@@ -7,6 +7,8 @@ class Client(models.Model):
     last_name = models.CharField(max_length=150, verbose_name='Фамилия')
     comment = models.TextField(verbose_name='Комментарий')
 
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Владелец')
+
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
@@ -42,10 +44,15 @@ class MailingSettings(models.Model):
 
     message = models.ForeignKey('mailing.Message', on_delete=models.CASCADE, verbose_name='Сообщение')
     clients = models.ManyToManyField('mailing.Client', verbose_name='Клиенты')
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'настройка'
         verbose_name_plural = 'настройки'
+
+        permissions = [
+            ('can_disable_mailings', 'Can disable mailings'),
+        ]
 
     def __str__(self):
         return f'{self.mailing_time} {self.period} {self.mailing_status}'
@@ -54,6 +61,8 @@ class MailingSettings(models.Model):
 class Message(models.Model):
     letter_subject = models.CharField(max_length=200, verbose_name='Тема письма')
     letter_body = models.TextField(verbose_name='Тело письма')
+
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'сообщение'
@@ -77,6 +86,7 @@ class MailingAttempt(models.Model):
     server_response = models.CharField(blank=True, max_length=150, verbose_name='ответ сервера')
 
     settings = models.ForeignKey('mailing.MailingSettings', on_delete=models.CASCADE, verbose_name='Настройки')
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'попытка рассылки'

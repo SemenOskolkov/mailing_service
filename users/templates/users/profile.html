@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">Изменение профиля</h1>
+        {{ form.as_p }}
+        <button class="w-100 btn btn-success" type="submit">Сохранить</button>
+        <td><a class="p-2 btn btn-primary" href="{{ request.META.HTTP_REFERER|escape }}">Назад</a></td>
+    </form>
+
+{% endblock %}

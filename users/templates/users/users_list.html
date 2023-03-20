@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block client %}
+    <h1 class="display-6">Список пользователей сайта</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Номер телефона</th>
+            <th scope="col">Аватар</th>
+            <th scope="col">Страна</th>
+            <th scope="col">Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.email }}</td>
+                <td>{{ object.phone }}</td>
+                <td>{{ object.avatar }}</td>
+                <td>{{ object.country }}</td>
+                {% if object.is_active %}
+                    <td><a class="btn btn-success" href="{% url 'users:status' object.pk %}">Активный</a></td>
+                {% else %}
+                    <td><a class="btn btn-danger" href="{% url 'users:status' object.pk %}">Заблокированный</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

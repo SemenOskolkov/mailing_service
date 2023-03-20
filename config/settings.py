@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'base',
+    'blog',
     'mailing',
     'users',
 ]
@@ -153,3 +154,13 @@ EMAIL_USE_SSL = True
 CRONJOBS = [
     ('* * * * *', 'mailing.services.auto_mailing'),
 ]
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379',
+        }
+    }

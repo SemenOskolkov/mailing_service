@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <p>
+        Время ссылки истекло
+    </p>
+    <p>
+    К сожалению время ссылки подтверждающей вашу почту истекло
+    </p>
+    <a href="{% url 'users:register' %}" class="btn btn-link">
+        Попробовать снова?
+    </a>
+{% endblock %}

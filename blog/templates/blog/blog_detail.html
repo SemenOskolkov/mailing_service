@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-10">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <img src="/media/{{ object.preview }}" height="100"/>
+                            </td>
+                        </tr>
+                        <td></td>
+                        <td>{{ object.title }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{ object.content }}</td>
+                        </tr>
+                        </tr>
+                        <tr>
+                            <td>Дата создания</td>
+                            <td>{{ object.date_of_creation }}</td>
+                        </tr>
+                        <td>Признак публикации</td>
+                        <td>{{ object.sign_publication }}</td>
+                        </tr>
+                        </tr>
+                        <td>Количество просмотров</td>
+                        <td>{{ object.number_views }}</td>
+                    </table>
+                </div>
+                <td><a href="{% url "blog:blog_list" %}" class="btn btn-primary">Назад</a></td>
+            </div>
+        </div>
+    </div>
+{% endblock %}

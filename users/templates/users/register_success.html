@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <p>
+    Вы успешно зарегистрировались на сайте "Owl mailing" !
+    </p>
+    <p>
+    Для завершения необходимо перейти по ссылке, отправленной на ваш email.
+    </p>
+    <a href="{% url 'mailing:home' %}" class="btn btn-link">
+        На главную страницу
+    </a>
+
+{% endblock %}

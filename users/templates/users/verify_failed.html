@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <p>
+        Что-то пошло не так...
+    </p>
+    <a href="{% url 'users:register' %}" class="btn btn-link">
+        Попробовать снова?
+    </a>
+    или
+    <a href="mailto:support@owl_mailing.com">Написать в поддержку</a>
+
+{% endblock %}

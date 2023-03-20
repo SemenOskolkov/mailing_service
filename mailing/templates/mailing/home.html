@@ -1,15 +1,139 @@
 {% extends 'base.html' %}
 
+{% load mailing_count %}
+{% load clients_count %}
 {% block content %}
-    <main class="px-3">
-        <h1>Owl mailing</h1>
-        <p class="lead">Совиная рассылка - это отличный сервис рассылок!
+
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal">Owl mailing</h1>
+        <p class="fs-5 text-muted">Совиная рассылка - это отличный сервис рассылок!
             <br>Благодаря нашему сервису можно устанавливать время рассылки.
             <br>Всегда можно посмотреть, кто из ваших клиентов не получил письмо.<br>
         </p>
-        <p class="lead">
-            <a href="#" class="btn btn-lg btn-light fw-bold border-black bg-white">Узнать больше</a>
-        </p>
+    </div>
+    </header>
+
+    <main>
+
+
+        <h2 class="display-6 text-center mb-4">Наши показатели</h2>
+
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th style="width: 34%;"></th>
+                    <th style="width: 22%;">Показатели</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-start">Количество рассылок</th>
+                    <td>
+                        <svg class="bi" width="24" height="24">
+                            <use {% mailing_count %}/>
+                        </svg>
+                    </td>
+                <tr>
+                    <th scope="row" class="text-start">Количество активных рассылок</th>
+                    <td>
+                        <svg class="bi" width="24" height="24">
+                            <use {% mail_count_activ %}/>
+                        </svg>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-start">Уникальных клиентов сервиса</th>
+                    <td>
+                        <svg class="bi" width="24" height="24">
+                            <use {% client_count %}/>
+                        </svg>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="display-6 text-center mb-4">Блог</h2>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            {% for item in blog %}
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <img src="/media/{{ item.preview }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.content }}</p>
+                            <a href="{% url 'blog:blog_detail' item.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </main>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">&copy; 2023–{% now 'Y' %}</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Разделы рассылки</h5>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1"><a class="link-secondary text-decoration-none"
+                                        href="{% url 'mailing:client_list' %}">Список клиентов</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none"
+                                        href="{% url 'mailing:mailing_settings_list' %}">Настройки рассылки</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none"
+                                        href="{% url 'mailing:message_list' %}">Сообщения рассылки</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none"
+                                        href="{% url 'mailing:mailing_attempt_list' %}">Попытки рассылки</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Полезная информация</h5>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="{% url 'blog:blog_list' %}">Блог</a>
+                    </li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">О нас</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Частые вопросы</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Компания</h5>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Контакты</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Служба поддержки</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    {#    <h2 class="display-6 text-center mb-4">Блог</h2>#}
+    {#    <div class="row">#}
+    {#        {% for item in blog %}#}
+    {#            <div class="col-md-6">#}
+    {#                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">#}
+    {#                    <div class="col p-4 d-flex flex-column position-static">#}
+    {#                        <strong class="d-inline-block mb-2 text-primary">World</strong>#}
+    {#                        <h3 class="mb-0">{{ item.title }}</h3>#}
+    {#                        <div class="mb-1 text-muted">{{ item.date_of_creation|date:"d M" }}</div>#}
+    {#                        <p class="card-text mb-auto">{{ item.content|slice:150 }}...</p>#}
+    {#                        <a href="{% url 'blog:blog_detail' item.pk %}" class="stretched-link">Подробнее</a>#}
+    {#                    </div>#}
+    {#                    <div class="col-auto d-none d-lg-block">#}
+    {#                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"#}
+    {#                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"#}
+    {#                             focusable="false"><title>Placeholder</title>#}
+    {#                            <rect width="100%" height="100%" fill="#55595c"></rect>#}
+    {#                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>#}
+    {#                        </svg>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        {% endfor %}#}
 
 {% endblock %}

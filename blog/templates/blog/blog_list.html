@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="display-6">Список публикаций</h1>
+    <table class="table table-hover">
+        <thead>
+        {% if user.is_authenticated %}
+            <a href="{% url "blog:blog_create" %}" class="btn btn-primary">Создать</a>
+        {% endif %}
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Заголовок</th>
+            <th scope="col">Содержание</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Количество просмотров</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Читать публикацию</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.title }}</td>
+                <td>{{ object.content|truncatechars:100 }}</td>
+                <td>
+                    <img src="/media/{{ object.preview }}" height="100"/>
+                    {#              <img src="{{ object.image|mediapath }}" height="100" />#}
+                    {#              <img src="{% mediapath object.image %}" height="100" />#}
+                </td>
+                <td>{{ object.number_views }}</td>
+                <td>{{ object.get_sign_publication_display }}</td>
+                <td><a href="{% url "blog:blog_detail" object.pk %}" class="btn btn-info">Подробнее</a></td>
+                <td>
+                    {% if perms.blog.change_blog or user == object.owner %}
+                    <a href="{% url "blog:blog_update" object.pk %}" class="btn btn-primary">Изменить</a>
+                        {% endif %}
+                    {% if perms.blog.delete_blog or user == object.owner %}
+                    <br><a href="{% url "blog:blog_delete" object.pk %}" class="btn btn-danger">Удалить</a>
+                    {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

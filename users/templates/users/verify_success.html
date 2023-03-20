@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+    <p>
+        Поздравляем! Теперь вы можете пользоваться нашим сервисом.
+    </p>
+    <a href="{% url 'mailing:home' %}" class="btn btn-link">
+        Перейти на главную страницу
+    </a>
+
+{% endblock %}
