@@ -15,8 +15,10 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['blog'] = Blog.objects.filter(sign_publication=Blog.STATUS_ACTIVE).order_by('?')[:3]
+        context_data['mailing_count'] = MailingSettings.objects.all().count()
+        context_data['mailing_activ_count'] = MailingSettings.objects.filter(mailing_status=MailingSettings.STATUS_LAUNCHED).count()
+        context_data['mailing_client_count'] = Client.objects.distinct('email').count()
         return context_data
-
 
 
 '''CRUD model Client'''

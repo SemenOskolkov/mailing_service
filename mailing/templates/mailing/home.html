@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load mailing_count %}
-{% load clients_count %}
 {% block content %}
 
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
@@ -31,14 +29,14 @@
                     <th scope="row" class="text-start">Количество рассылок</th>
                     <td>
                         <svg class="bi" width="24" height="24">
-                            <use {% mailing_count %}/>
+                            <use {{ mailing_count }}/>
                         </svg>
                     </td>
                 <tr>
                     <th scope="row" class="text-start">Количество активных рассылок</th>
                     <td>
                         <svg class="bi" width="24" height="24">
-                            <use {% mail_count_activ %}/>
+                            <use {{ mailing_activ_count }}/>
                         </svg>
                     </td>
                 </tr>
@@ -49,7 +47,7 @@
                     <th scope="row" class="text-start">Уникальных клиентов сервиса</th>
                     <td>
                         <svg class="bi" width="24" height="24">
-                            <use {% client_count %}/>
+                            <use {{ mailing_client_count }}/>
                         </svg>
                     </td>
                 </tr>
