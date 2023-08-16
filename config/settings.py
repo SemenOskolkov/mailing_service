@@ -25,10 +25,10 @@ load_dotenv(dotenv_path=dot_env)
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g2&p-%r(^$h9nm_u_cri3x$pw8m@=_tn8^b8((m5oh!9g^m3-^'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -86,8 +86,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mailing_project',
-        'USER': 'postgres',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
     }
 }
 
@@ -145,11 +145,11 @@ LOGIN_URL = '/users/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 
 CRONJOBS = [
     ('* * * * *', 'mailing.services.auto_mailing'),
